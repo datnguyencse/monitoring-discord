@@ -9,7 +9,7 @@ const client = new Discord.Client();
  
 client.on('ready', () => {
   console.log(`Discord Logged in as ${client.user.tag}!`);
-  cron.schedule("*/15 * * * * *", function() {
+  cron.schedule("*/60 * * * * *", function() {
     console.log("---------------------");
     console.log("Running Cron Job");
     let options = { method: 'GET',
