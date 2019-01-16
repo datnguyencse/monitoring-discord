@@ -6,25 +6,25 @@ const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
 const Discord = require('discord.js');
 const client = new Discord.Client();
- 
+
 client.on('ready', () => {
   console.log(`Discord Logged in as ${client.user.tag}!`);
-  cron.schedule("*/60 * * * * *", function() {
+  cron.schedule("*/15 * * * * *", function() {
     console.log("---------------------");
     console.log("Running Cron Job");
     let options = { method: 'GET',
       url: 'https://gateway.chotot.com/v1/public/ad-listing',
       json: true,
-      qs: 
+      qs:
        { region_v2: '13000',
-         cg: '1020',
+         cg: '12000',
+         w: '1',
          limit: '20',
          st: 's,k',
          f: 'p',
-         page: '1',
-         price: '100000000-700000000' },
-      headers: 
-       { 'Postman-Token': 'f9667941-d105-437f-9d6c-7769505cdd89',
+         page: '1' },
+      headers:
+       { 'Postman-Token': '513bb4d8-22b2-44c6-b830-aa612fd2e2e3',
          'cache-control': 'no-cache' } };
 
     request(options, function (error, response, body) {
@@ -47,7 +47,7 @@ client.on('ready', () => {
         let image = ad.image || "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
         client.channels.get("534396349412540426").send(`
           ===============================================\n**${ad.subject}**\n***${ad.price_string}***\n*${ad.area_name} - ${ad.region_name}*\n*https://nha.chotot.com/${ad.list_id}.htm*
-        `, { 
+        `, {
           files: [`${image}?file=file.png`]
         }).then(() => {
           return callback()
@@ -57,16 +57,16 @@ client.on('ready', () => {
           return callback()
         })
       }, (err) => {
-        
+
       });
     });
   });
 });
- 
+
 client.on('message', msg => {
   if (msg.content === 'ping') {
     msg.reply('pong');
   }
 });
- 
+
 client.login('NTM0Mzk2NDk0NDA5NjI5Njk3.Dx4_TQ.rdIr-wVhjnBLTyGZEttR1A51kAc');
